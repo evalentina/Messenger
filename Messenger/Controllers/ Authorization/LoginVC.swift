@@ -23,15 +23,31 @@ class LoginViewController: UIViewController {
         return imageView
     }()
     
+    private let emailLabel : UILabel = {
+        var emailLabel = UILabel()
+        emailLabel.text = "Last name:"
+        emailLabel.textColor = .black
+        emailLabel.font = .systemFont(ofSize: 15)
+        return emailLabel
+    }()
+    
     private let emailTextField : UITextField = {
         var emailTextField = UITextField()
         emailTextField.layer.cornerRadius = 12
         emailTextField.layer.borderWidth = 1
         emailTextField.placeholder = "Enter your login..."
         emailTextField.layer.borderColor = UIColor.systemGray.cgColor
-        emailTextField.leftView = UIView(frame: CGRect(x: 0, y: 10, width: 0, height: 0))
+        emailTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 0))
         emailTextField.leftViewMode = .always
         return emailTextField
+    }()
+    
+    private let passwordLabel : UILabel = {
+        var passwordLabel = UILabel()
+        passwordLabel.text = "Password:"
+        passwordLabel.textColor = .black
+        passwordLabel.font = .systemFont(ofSize: 15)
+        return passwordLabel
     }()
     
     private let passwordTextField : UITextField = {
@@ -41,7 +57,7 @@ class LoginViewController: UIViewController {
         passwordTextField.placeholder = "Enter your password..."
         passwordTextField.layer.borderColor = UIColor.systemGray.cgColor
         passwordTextField.isSecureTextEntry = true
-        passwordTextField.leftView = UIView(frame: CGRect(x: 0, y: 10, width: 0, height: 0))
+        passwordTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 0))
         passwordTextField.leftViewMode = .always
         return passwordTextField
     }()
@@ -55,16 +71,36 @@ class LoginViewController: UIViewController {
         
         return loginButton
     }()
+    
+    private let registerButton : UIButton = {
+        let registerButton = UIButton()
+        registerButton.layer.cornerRadius = 12
+        registerButton.backgroundColor = .white
+        registerButton.titleLabel?.numberOfLines = 0
+        registerButton.titleLabel?.lineBreakMode = .byWordWrapping
+        let attributedString = NSAttributedString(string: NSLocalizedString("Don't you have an account yet? Register", comment: ""), attributes:[
+            NSAttributedString.Key.font : UIFont.systemFont(ofSize: 13),
+            NSAttributedString.Key.foregroundColor : UIColor.black,
+            NSAttributedString.Key.underlineStyle:1.0
+        ])
+        registerButton.setAttributedTitle(attributedString, for: .normal)        
+        return registerButton
+    }()
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         view.addSubview(scrollView)
         scrollView.addSubview(emailTextField)
+        scrollView.addSubview(emailLabel)
         scrollView.addSubview(passwordTextField)
+        scrollView.addSubview(passwordLabel)
         scrollView.addSubview(imageView)
         scrollView.addSubview(loginButton)
-        loginButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        scrollView.addSubview(registerButton)
+        loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
+        registerButton.addTarget(self, action: #selector(registerButtonTapped), for: .touchUpInside)
         emailTextField.delegate = self
         passwordTextField.delegate = self
     }
@@ -75,13 +111,16 @@ class LoginViewController: UIViewController {
         let size = view.width/3
         imageView.frame = CGRect(x: (view.width - size)/2, y: 20, width: size, height: size)
         scrollView.frame = view.bounds
-        emailTextField.frame = CGRect(x: 30, y: imageView.bottom + 10, width: scrollView.width-60, height: 40)
-        passwordTextField.frame = CGRect(x: 30, y: emailTextField.bottom + 10, width: scrollView.width-60, height: 40)
+        emailLabel.frame = CGRect(x: 30, y: imageView.bottom + 5, width: scrollView.width-60, height: 15)
+        emailTextField.frame = CGRect(x: 30, y: emailLabel.bottom + 10, width: scrollView.width-60, height: 40)
+        passwordLabel.frame = CGRect(x: 30, y: emailTextField.bottom + 5, width: scrollView.width-60, height: 15)
+        passwordTextField.frame = CGRect(x: 30, y: passwordLabel.bottom + 10, width: scrollView.width-60, height: 40)
         loginButton.frame = CGRect(x: 70, y: passwordTextField.bottom + 30, width: scrollView.width-140, height: 50)
+        registerButton.frame = CGRect(x: 40, y: loginButton.bottom + 10, width: scrollView.width-80, height: 40)
         
     }
     
-    @objc func buttonTapped() {
+    @objc func loginButtonTapped() {
         guard let emailText = emailTextField.text,
               let passwordText = passwordTextField.text,
               !emailText.isEmpty else {
@@ -92,8 +131,12 @@ class LoginViewController: UIViewController {
             self.alertPassword()
             return
         }
-        
-        
+    }
+    
+    @objc func registerButtonTapped() {
+        let vc = RegisterViewController()
+        vc.title = "Create an account"
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     private func alertLogin() {
