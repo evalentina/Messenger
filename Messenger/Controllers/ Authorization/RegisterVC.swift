@@ -8,7 +8,6 @@
 import UIKit
 
 class RegisterViewController: UIViewController {
-    
 
     private let scrollView : UIScrollView = {
         var scrollView = UIScrollView()
@@ -18,10 +17,14 @@ class RegisterViewController: UIViewController {
     
     private let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "person")
+        imageView.image = UIImage(named: "user")
         imageView.contentMode = .scaleAspectFit
         imageView.backgroundColor = .white
         imageView.tintColor = .black
+        imageView.layer.masksToBounds = true
+        imageView.layer.cornerRadius = imageView.width/2
+        imageView.layer.borderWidth = 2
+        imageView.layer.borderColor = UIColor.systemGray.cgColor
         return imageView
     }()
     
@@ -164,7 +167,7 @@ class RegisterViewController: UIViewController {
         
     }
     
-    @objc func registerButtonTapped() {
+    @objc private func registerButtonTapped() {
         guard let nameText = nameTextField.text,
               let lastnameText = lastnameTextField.text,
               let emailText = emailTextField.text,
@@ -181,8 +184,28 @@ class RegisterViewController: UIViewController {
         }
     }
     
-    @objc func createProfilePicture() {
+    @objc private func createProfilePicture() {
         
+        let alert = UIAlertController(title: "Select a photo", message: nil, preferredStyle: .actionSheet)
+        let takePhoto = UIAlertAction(title: "Camera", style: .default) { _ in
+            let vc = UIImagePickerController()
+            vc.sourceType = .camera
+            vc.delegate = self
+            vc.allowsEditing = true
+            self.present(vc, animated: true)
+        }
+        let openPhotoLibrary = UIAlertAction(title: "Photo Library", style: .default) { _ in
+            let vc = UIImagePickerController()
+            vc.sourceType = .photoLibrary
+            vc.delegate = self
+            vc.allowsEditing = true
+            self.present(vc, animated: true)
+        }
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel)
+        alert.addAction(takePhoto)
+        alert.addAction(openPhotoLibrary)
+        alert.addAction(cancel)
+        present(alert, animated: true)
     }
     
     private func alertLogin() {
@@ -198,8 +221,6 @@ class RegisterViewController: UIViewController {
         present(alert, animated: true)
     }
     
-
-    
 }
 
 extension RegisterViewController : UITextFieldDelegate {
@@ -213,5 +234,19 @@ extension RegisterViewController : UITextFieldDelegate {
         return true
     }
     
+}
+
+extension RegisterViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        picker.dismiss(animated: true)
+        guard let selectedPhoto = info[UIImagePickerController.InfoKey.editedImage] as? UIImage else { return }
+        self.imageView.image = selectedPhoto
+        
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true)
+    }
 }
 
