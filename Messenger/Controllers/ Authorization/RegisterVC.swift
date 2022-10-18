@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class RegisterViewController: UIViewController {
 
@@ -182,6 +183,25 @@ class RegisterViewController: UIViewController {
             self.alertPassword()
             return
         }
+        DatabaseManager.shared.checkIfEmailExists(email: emailText) { [weak self] exists in
+            guard let self = self else { return }
+            guard !exists else {
+                let alert = UIAlertController(title: "Error", message: "The user with this email already exists.", preferredStyle: .alert)
+                self.present(alert, animated: true)
+                return
+            }
+            
+            FirebaseAuth.Auth.auth().createUser(withEmail: emailText, password: passwordText) { result, error in
+                guard error == nil,
+                      result != nil else {
+                    print("Can't create user")
+                    return
+                }
+                DatabaseManager.shared.inserUserInDatabase(user: User(name: nameText, lastname: lastnameText, email: emailText))
+            }
+        }
+        
+        
     }
     
     @objc private func createProfilePicture() {
