@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseAuth
+import FBSDKLoginKit
 
 class LoginViewController: UIViewController {
     
@@ -26,7 +27,7 @@ class LoginViewController: UIViewController {
     
     private let emailLabel : UILabel = {
         var emailLabel = UILabel()
-        emailLabel.text = "Last name:"
+        emailLabel.text = "Email:"
         emailLabel.textColor = .black
         emailLabel.font = .systemFont(ofSize: 15)
         return emailLabel
@@ -88,7 +89,8 @@ class LoginViewController: UIViewController {
         return registerButton
     }()
     
-
+    private let facebookLoginButton = FBLoginButton()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -100,10 +102,13 @@ class LoginViewController: UIViewController {
         scrollView.addSubview(imageView)
         scrollView.addSubview(loginButton)
         scrollView.addSubview(registerButton)
+        scrollView.addSubview(facebookLoginButton)
         loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
         registerButton.addTarget(self, action: #selector(registerButtonTapped), for: .touchUpInside)
         emailTextField.delegate = self
         passwordTextField.delegate = self
+        facebookLoginButton.delegate = self
+        
     }
     
     
@@ -118,7 +123,7 @@ class LoginViewController: UIViewController {
         passwordTextField.frame = CGRect(x: 30, y: passwordLabel.bottom + 10, width: scrollView.width-60, height: 40)
         loginButton.frame = CGRect(x: 70, y: passwordTextField.bottom + 30, width: scrollView.width-140, height: 50)
         registerButton.frame = CGRect(x: 40, y: loginButton.bottom + 10, width: scrollView.width-80, height: 40)
-        
+        facebookLoginButton.frame = CGRect(x: 70, y: registerButton.bottom + 20, width: scrollView.width-140, height: 50)
     }
     
     @objc func loginButtonTapped() {
@@ -178,5 +183,55 @@ extension LoginViewController : UITextFieldDelegate {
         }
         return true
     }
+    
+}
+
+extension LoginViewController: LoginButtonDelegate {
+    func loginButtonDidLogOut(_ loginButton: FBLoginButton) {
+        print("log out")
+    }
+    
+    func loginButton(_ loginButton: FBLoginButton, didCompleteWith result: LoginManagerLoginResult?, error: Error?) {
+        guard let token = result?.token?.tokenString else {
+            return
+        }
+        
+        let facebookRequest = FBSDKLoginKit.GraphRequest(graphPath: "me", parameters: ["fields" : "email , name"], tokenString: token, version: nil, httpMethod: .get)
+        facebookRequest.start(completion: { _, result, error in
+            guard let result = result as? [String: Any] else {
+                return
+            }
+            
+            guard let userName = result["name"] as? String,
+                  let email = result["email"] as? String else {
+                return
+            }
+            let nameComponents = userName.components(separatedBy: " ")
+            guard nameComponents.count == 2 else {
+                return
+            }
+            let firstName = nameComponents[0]
+            let lastname = nameComponents[1]
+            
+            DatabaseManager.shared.checkIfEmailExists(email: email) {  exists in
+                if !exists {
+                    DatabaseManager.shared.inserUserInDatabase(user: User(name: firstName, lastname: lastname, email: email))
+                }
+            }
+            let credential = FacebookAuthProvider.credential(withAccessToken: token)
+            FirebaseAuth.Auth.auth().signIn(with: credential) { [weak self] result, error in
+                guard let self = self else { return }
+                guard let result = result else {
+                    return
+                }
+                self.navigationController?.dismiss(animated: true)
+
+            }
+        })
+        
+        
+        
+    }
+    
     
 }

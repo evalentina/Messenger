@@ -153,16 +153,16 @@ class RegisterViewController: UIViewController {
         scrollView.frame = view.bounds
         
         nameLabel.frame = CGRect(x: 30, y: imageView.bottom + 5, width: scrollView.width-60, height: 15)
-        nameTextField.frame = CGRect(x: 30, y: nameLabel.bottom + 5, width: scrollView.width-60, height: 25)
+        nameTextField.frame = CGRect(x: 30, y: nameLabel.bottom + 5, width: scrollView.width-60, height: 30)
         
         lastnameLabel.frame = CGRect(x: 30, y: nameTextField.bottom + 5, width: scrollView.width-60, height: 15)
-        lastnameTextField.frame = CGRect(x: 30, y: lastnameLabel.bottom + 10, width: scrollView.width-60, height: 25)
+        lastnameTextField.frame = CGRect(x: 30, y: lastnameLabel.bottom + 10, width: scrollView.width-60, height: 30)
         
         emailLabel.frame = CGRect(x: 30, y: lastnameTextField.bottom + 5, width: scrollView.width-60, height: 15)
-        emailTextField.frame = CGRect(x: 30, y: emailLabel.bottom + 10, width: scrollView.width-60, height: 25)
+        emailTextField.frame = CGRect(x: 30, y: emailLabel.bottom + 10, width: scrollView.width-60, height: 30)
         
         passwordLabel.frame = CGRect(x: 30, y: emailTextField.bottom + 5, width: scrollView.width-60, height: 15)
-        passwordTextField.frame = CGRect(x: 30, y: passwordLabel.bottom + 10, width: scrollView.width-60, height: 25)
+        passwordTextField.frame = CGRect(x: 30, y: passwordLabel.bottom + 10, width: scrollView.width-60, height: 30)
         
         registerButton.frame = CGRect(x: 70, y: passwordTextField.bottom + 30, width: scrollView.width-140, height: 40)
         
