@@ -8,6 +8,7 @@
 import UIKit
 import FirebaseAuth
 import FBSDKLoginKit
+import JGProgressHUD
 
 class LoginViewController: UIViewController {
     
@@ -89,6 +90,8 @@ class LoginViewController: UIViewController {
         return registerButton
     }()
     
+    private let spinner = JGProgressHUD(style: .dark)
+    
     private let facebookLoginButton = FBLoginButton()
     
     override func viewDidLoad() {
@@ -137,7 +140,7 @@ class LoginViewController: UIViewController {
             self.alertPassword()
             return
         }
-        
+        spinner.show(in: view)
         FirebaseAuth.Auth.auth().signIn(withEmail: emailText, password: passwordText) { [weak self] result, error in
             guard let self = self,
                   error == nil,
@@ -145,6 +148,10 @@ class LoginViewController: UIViewController {
                 print("Error sign in")
                 return
             }
+            DispatchQueue.main.async {
+                self.spinner.dismiss()
+            }
+            
             let user = result.user
             self.navigationController?.dismiss(animated: false)
         }
