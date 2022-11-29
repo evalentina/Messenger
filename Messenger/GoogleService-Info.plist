@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>616962929387-4t3n4btvb0h6gq7jmltaqtk84fi6h2o9.apps.googleusercontent.com</string>
+	<string>405861163475-r90qoipqia3nprffr99ev9m6ukl7llne.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.616962929387-4t3n4btvb0h6gq7jmltaqtk84fi6h2o9</string>
+	<string>com.googleusercontent.apps.405861163475-r90qoipqia3nprffr99ev9m6ukl7llne</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDC0Mj2q8amm_Ts72nhJU6vk9DKZq4Qdec</string>
+	<string>AIzaSyBEt2YiQZaqUg36k5QL3WCQI9WWxv0cUgc</string>
 	<key>GCM_SENDER_ID</key>
-	<string>616962929387</string>
+	<string>405861163475</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.evalentina.Messenger</string>
 	<key>PROJECT_ID</key>
-	<string>messenger-31ed8</string>
+	<string>telegram-ec7fe</string>
 	<key>STORAGE_BUCKET</key>
-	<string>messenger-31ed8.appspot.com</string>
+	<string>telegram-ec7fe.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:616962929387:ios:79dd89ed4122c287ed04ae</string>
+	<string>1:405861163475:ios:c3e2b63e8557645076cf26</string>
 </dict>
 </plist>

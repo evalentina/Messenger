@@ -65,7 +65,6 @@
         <!--Navigation Controller-->
         <scene sceneID="Law-xU-ujU">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="pK6-LL-37X" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <navigationController id="obf-vJ-TKN" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="settings" id="gib-YB-uUr"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="dr9-zt-5VG">
@@ -76,6 +75,7 @@
                         <segue destination="wJZ-8A-pmo" kind="relationship" relationship="rootViewController" id="5N8-Du-pX7"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pK6-LL-37X" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="996" y="-65"/>
         </scene>
@@ -86,14 +86,29 @@
                     <view key="view" contentMode="scaleToFill" id="RGP-T5-xPq">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="IPr-Ky-kUg">
+                                <rect key="frame" x="0.0" y="140" width="414" height="673"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="oah-OP-YWW"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="oah-OP-YWW" firstAttribute="trailing" secondItem="IPr-Ky-kUg" secondAttribute="trailing" id="749-gC-xpY"/>
+                            <constraint firstItem="IPr-Ky-kUg" firstAttribute="top" secondItem="oah-OP-YWW" secondAttribute="top" id="lC7-fY-W5K"/>
+                            <constraint firstItem="IPr-Ky-kUg" firstAttribute="bottom" secondItem="oah-OP-YWW" secondAttribute="bottom" id="oex-mD-bJ0"/>
+                            <constraint firstItem="IPr-Ky-kUg" firstAttribute="leading" secondItem="oah-OP-YWW" secondAttribute="leading" id="xBS-so-Yug"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Settings" id="nV0-Su-Vso"/>
+                    <connections>
+                        <outlet property="tableView" destination="IPr-Ky-kUg" id="77O-pf-lVu"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fMc-Tu-M61" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="996" y="673"/>
+            <point key="canvasLocation" x="995.65217391304361" y="672.99107142857144"/>
         </scene>
     </scenes>
     <resources>
