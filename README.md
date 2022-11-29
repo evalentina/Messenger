@@ -4,7 +4,7 @@
 
 - Firebase
 - Facebook Log In
-- Email/ Pass Registration / Log In
+- Email / Pass Registration / Log In
 - Photo Messages
 - Video Messages
 - Search for Users
