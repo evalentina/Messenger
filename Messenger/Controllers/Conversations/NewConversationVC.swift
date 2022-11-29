@@ -108,7 +108,7 @@ extension NewConversationViewController: UITableViewDelegate, UITableViewDataSou
 extension NewConversationViewController: UISearchBarDelegate {
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let text = searchBar.text, !text.replacingOccurrences(of: " ", with: "").isEmpty else {
+        guard let text = searchBar.text, !text.replacingOccurrences(of: "", with: "-").isEmpty else {
             return
         }
 

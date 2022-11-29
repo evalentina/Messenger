@@ -35,7 +35,6 @@
 /* Begin PBXFileReference section */
 		53B25C1C89E017C3A5323BA3 /* Pods-Messenger.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Messenger.release.xcconfig"; path = "Target Support Files/Pods-Messenger/Pods-Messenger.release.xcconfig"; sourceTree = "<group>"; };
 		C806EE3429007A2300B0AF71 /* ExtensionUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionUIView.swift; sourceTree = "<group>"; };
-		C806EE3629007EEE00B0AF71 /* Messenger.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Messenger.entitlements; sourceTree = "<group>"; };
 		C86E0CC329327C4700CF5FD7 /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
 		C86E0CC529327C7E00CF5FD7 /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
 		C86E0CC729327C9300CF5FD7 /* SearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModel.swift; sourceTree = "<group>"; };
@@ -141,7 +140,6 @@
 			isa = PBXGroup;
 			children = (
 				C8A5E2A02934B3BD00502E2F /* GoogleService-Info.plist */,
-				C806EE3629007EEE00B0AF71 /* Messenger.entitlements */,
 				C8EEB5E828FC51D200AD25AF /* Models */,
 				C8EEB5E928FC51D700AD25AF /* Views */,
 				C8EEB5E728FC51C200AD25AF /* Controllers */,

@@ -547,9 +547,6 @@ extension DatabaseManager {
                             return
                         }
 
-
-                        // Update latest message for recipient user
-
                         strongSelf.database.child("\(otherUserEmail)/conversations").observeSingleEvent(of: .value, with: { snapshot in
                             let updatedValue: [String: Any] = [
                                 "date": dateString,
@@ -643,10 +640,9 @@ extension DatabaseManager {
                 ref.setValue(conversations, withCompletionBlock: { error, _  in
                     guard error == nil else {
                         completion(false)
-                        print("faield to write new conversatino array")
+                        print("faield to write new conversation array")
                         return
                     }
-                    print("deleted conversaiton")
                     completion(true)
                 })
             }

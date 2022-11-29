@@ -212,7 +212,6 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // begin delete
             let conversationId = conversations[indexPath.row].id
             tableView.beginUpdates()
             self.conversations.remove(at: indexPath.row)
@@ -220,7 +219,7 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
 
             DatabaseManager.shared.deleteConversation(conversationId: conversationId, completion: { success in
                 if !success {
-                    // add model and row back and show error alert
+                    print("Error delete conversation")
                 }
             })
 

@@ -169,7 +169,7 @@ final class ChatViewController: MessagesViewController {
                     self?.messagesCollectionView.reloadDataAndKeepOffset()
 
                     if shouldScrollToBottom {
-                        self?.messagesCollectionView.scrollToBottom()
+                        self?.messagesCollectionView.scrollToLastItem()
                     }
                 }
             case .failure(let error):
@@ -302,7 +302,7 @@ extension ChatViewController: UIImagePickerControllerDelegate, UINavigationContr
 extension ChatViewController: InputBarAccessoryViewDelegate {
 
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
-        guard !text.replacingOccurrences(of: " ", with: "").isEmpty,
+        guard !text.replacingOccurrences(of: "", with: "-").isEmpty,
             let selfSender = self.selfSender,
             let messageId = createMessageId() else {
                 return
@@ -310,7 +310,7 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
 
         print("Sending: \(text)")
 
-        let mmessage = Message(sender: selfSender,
+        let message = Message(sender: selfSender,
                                messageId: messageId,
                                sentDate: Date(),
                                kind: .text(text))
@@ -318,11 +318,11 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
         // Send Message
         if isNewConversation {
             // Create conversation in database
-            DatabaseManager.shared.createNewConversation(with: otherUserEmail, name: self.title ?? "User", firstMessage: mmessage, completion: { [weak self]success in
+            DatabaseManager.shared.createNewConversation(with: otherUserEmail, name: self.title ?? "User", firstMessage: message, completion: { [weak self]success in
                 if success {
                     print("message sent")
                     self?.isNewConversation = false
-                    let newConversationId = "conversation_\(mmessage.messageId)"
+                    let newConversationId = "conversation_\(message.messageId)"
                     self?.conversationId = newConversationId
                     self?.listenForMessages(id: newConversationId, shouldScrollToBottom: true)
                     self?.messageInputBar.inputTextView.text = nil
@@ -338,7 +338,7 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
             }
 
             // append to existing conversation data
-            DatabaseManager.shared.sendMessage(to: conversationId, otherUserEmail: otherUserEmail, name: name, newMessage: mmessage, completion: { [weak self] success in
+            DatabaseManager.shared.sendMessage(to: conversationId, otherUserEmail: otherUserEmail, name: name, newMessage: message, completion: { [weak self] success in
                 if success {
                     self?.messageInputBar.inputTextView.text = nil
                     print("message sent")
